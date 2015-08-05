@@ -38,7 +38,7 @@ class PersonProcMX < GenericPerson
   attr_accessor :with_mx_validation
 
   validates :primary_email,
-    :email => { :mx => Proc.new{|person| person.with_mx_validation }}
+            :email => { :mx => Proc.new{|person| person.with_mx_validation }}
 end
 
 class PersonProcMXA < GenericPerson
