@@ -58,7 +58,7 @@ class EmailValidator < ActiveModel::EachValidator
     end
 
     begin
-      email =~ Regex and not email =~ /\.\./ and domain.length <= 255 and local.length <= 64
+      email =~ Regex and email !~ /\.\./ and domain.length <= 255 and local.length <= 64
     rescue Encoding::CompatibilityError
       # RFC 2822 and RFC 3696 don't support UTF-8 characters in email address,
       # so Regexp is in ASCII-8BIT encoding, which raises this exception when
