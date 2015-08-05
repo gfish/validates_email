@@ -90,7 +90,7 @@ class EmailValidator < ActiveModel::EachValidator
     require 'rest_client'
     res = RestClient.get "https://api:#{ENV['MAILGUN_PUBLIC_KEY']}@api.mailgun.net/v2/address/validate", params: {address: email}
     parsed = JSON.parse(res)
-    is_valid = !parsed["is_valid"].nil? ? parsed["is_valid"] : false
+    is_valid = !parsed['is_valid'].nil? ? parsed['is_valid'] : false
     is_valid
   end
 end

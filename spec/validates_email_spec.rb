@@ -2,8 +2,8 @@
 require 'spec_helper'
 
 describe EmailValidator do
-  context "w/o mx fallback" do
-    it "allows valid emails" do
+  context 'w/o mx fallback' do
+    it 'allows valid emails' do
       [
         'valid@example.com',
         'Valid@test.example.com',
@@ -39,7 +39,7 @@ describe EmailValidator do
     end
 
     # From http://www.rfc-editor.org/errata_search.php?rfc=3696
-    it "allows quoted characters" do
+    it 'allows quoted characters' do
       [
         '"Abc\@def"@example.com',
         '"Fred\ Bloggs"@example.com',
@@ -109,21 +109,21 @@ describe EmailValidator do
     end
   end
 
-  context "w/ MX fallback" do
-    it "allows valid email" do
-      email = "test@gmail.com"
+  context 'w/ MX fallback' do
+    it 'allows valid email' do
+      email = 'test@gmail.com'
       person = PersonMX.new(primary_email: email)
       expect(person).to be_valid(email)
     end
 
     it "doesn't allow invalid email" do
-      email = "test@example.com"
+      email = 'test@example.com'
       person = PersonMX.new(primary_email: email)
       expect(person).to_not be_valid(email)
     end
 
     it "doesn't validate mx with invalid email" do
-      email = "testexample.com"
+      email = 'testexample.com'
       expect do
         person = PersonMX.new(primary_email: email)
         expect(person).to_not be_valid(email)
@@ -131,80 +131,80 @@ describe EmailValidator do
     end
   end
 
-  context "w/ A record MX fallback" do
-    it "allows valid email" do
-      email = "test@gmail.com"
+  context 'w/ A record MX fallback' do
+    it 'allows valid email' do
+      email = 'test@gmail.com'
       person = PersonMXA.new(primary_email: email)
       expect(person).to be_valid(email)
     end
 
-    it "allows valid email with fallback to A" do
-      email = "test@example.com"
+    it 'allows valid email with fallback to A' do
+      email = 'test@example.com'
       person = PersonMXA.new(primary_email: email)
       expect(person).to be_valid(email)
     end
   end
 
-  context "w/ custom error messages" do
-    it "allows custom error message" do
-      email = "example.com"
+  context 'w/ custom error messages' do
+    it 'allows custom error message' do
+      email = 'example.com'
       person = PersonMessage.new(primary_email: email)
       expect(person).to_not be_valid(email)
-      expect(person.errors[:primary_email]).to eql(["fails with custom message"])
+      expect(person.errors[:primary_email]).to eql(['fails with custom message'])
     end
 
-    it "allows custom error message for mx fallback" do
-      email = "test@example.com"
+    it 'allows custom error message for mx fallback' do
+      email = 'test@example.com'
       person = PersonMXMessage.new(primary_email: email)
       expect(person).to_not be_valid(email)
-      expect(person.errors[:primary_email]).to eql(["fails with custom mx message"])
+      expect(person.errors[:primary_email]).to eql(['fails with custom mx message'])
     end
   end
 
-  context "with proc-based MX validation" do
-    it "allows valid email" do
-      email = "test@gmail.com"
+  context 'with proc-based MX validation' do
+    it 'allows valid email' do
+      email = 'test@gmail.com'
       person = PersonProcMX.new(primary_email: email)
       expect(person).to be_valid(email)
     end
 
-    it "allows invalid email if proc evaluates to false" do
-      email = "test@example.com"
+    it 'allows invalid email if proc evaluates to false' do
+      email = 'test@example.com'
       person = PersonProcMX.new(primary_email: email)
       person.with_mx_validation = false
       expect(person).to be_valid(email)
     end
 
-    it "does not allow invalid email if proc evaluates to true" do
-      email = "test@example.com"
+    it 'does not allow invalid email if proc evaluates to true' do
+      email = 'test@example.com'
       person = PersonProcMX.new(primary_email: email)
       person.with_mx_validation = true
       expect(person).to_not be_valid(email)
     end
   end
 
-  context "with proc-based MX validation with fallback to A" do
-    it "allows valid email" do
-      email = "test@gmail.com"
+  context 'with proc-based MX validation with fallback to A' do
+    it 'allows valid email' do
+      email = 'test@gmail.com'
       person = PersonProcMXA.new(primary_email: email)
       expect(person).to be_valid(email)
     end
 
-    it "allows valid email with fallback to A" do
-      email = "test@example.com"
+    it 'allows valid email with fallback to A' do
+      email = 'test@example.com'
       person = PersonMXA.new(primary_email: email)
       expect(person).to be_valid(email)
     end
 
-    it "allows invalid email if proc evaluates to false" do
-      email = "test@exampledoesnotexist.com"
+    it 'allows invalid email if proc evaluates to false' do
+      email = 'test@exampledoesnotexist.com'
       person = PersonProcMXA.new(primary_email: email)
       person.with_mx_validation = false
       expect(person).to be_valid(email)
     end
 
-    it "does not allow invalid email if proc evaluates to true" do
-      email = "test@exampledoesnotexist.com"
+    it 'does not allow invalid email if proc evaluates to true' do
+      email = 'test@exampledoesnotexist.com'
       person = PersonProcMX.new(primary_email: email)
       person.with_mx_validation = true
       expect(person).to_not be_valid(email)
