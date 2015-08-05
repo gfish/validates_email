@@ -26,7 +26,11 @@ class EmailValidator < ActiveModel::EachValidator
       if validate_mailgun && ENV['MAILGUN_PUBLIC_KEY'].present? && !validates_email_with_mailgun(value)
         record.errors.add(attribute, options[:mailgun_message] || :invalid)
       end
-      validate_mx_condition = options[:mx] && options[:mx].is_a?(Hash) ? (options[:mx][:if].nil? ? true : options[:mx][:if]) : options[:mx]
+      validate_mx_condition = if options[:mx] && options[:mx].is_a?(Hash)
+                                options[:mx][:if].nil? ? true : options[:mx][:if]
+                              else
+                                options[:mx]
+                              end
       validate_mx = validate_mx_condition && validate_mx_condition.respond_to?(:call) ? validate_mx_condition.call(record) : validate_mx_condition
       if validate_mx && !validates_email_domain(value, options[:mx])
         record.errors.add(attribute, options[:mx_message] || :mx_invalid)
