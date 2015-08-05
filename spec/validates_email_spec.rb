@@ -81,9 +81,9 @@ describe EmailValidator do
 
     it "doesn't raise exception for emails with UTF-8 characters" do
       person = Person.new(:primary_email => 'чебурашка@kremlin.ru')
-      expect {
+      expect do
         person.valid?
-      }.not_to raise_error
+      end.not_to raise_error
     end
 
     # From http://tools.ietf.org/html/rfc3696, page 5
@@ -125,10 +125,10 @@ describe EmailValidator do
 
     it "doesn't validate mx with invalid email" do
       email = "testexample.com"
-      expect {
+      expect do
         person = PersonMX.new(:primary_email => email)
         expect(person).to_not be_valid(email)
-      }.to_not raise_error
+      end.to_not raise_error
     end
   end
 
