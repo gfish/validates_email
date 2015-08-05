@@ -35,7 +35,7 @@ describe EmailValidator do
         'valid@example.w-dash.sch.uk'
       ].each do |email|
         person = Person.new(:primary_email => email)
-        person.should be_valid(email)
+        expect(person).to be_valid(email)
       end
     end
 
@@ -47,7 +47,7 @@ describe EmailValidator do
         '"Joe.\\Blow"@example.com'
       ].each do |email|
         person = Person.new(:primary_email => email)
-        person.should be_valid(email)
+        expect(person).to be_valid(email)
       end
     end
 
@@ -75,7 +75,7 @@ describe EmailValidator do
         'invalid++email@example.com'
       ].each do |email|
         person = Person.new(:primary_email => email)
-        person.should_not be_valid(email)
+        expect(person).to_not be_valid(email)
       end
     end
 
@@ -95,7 +95,7 @@ describe EmailValidator do
         'Joe.\\Blow@example.com'
       ].each do |email|
         person = Person.new(:primary_email => email)
-        person.should_not be_valid(email)
+        expect(person).to_not be_valid(email)
       end
     end
 
@@ -105,7 +105,7 @@ describe EmailValidator do
         'test@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com'
       ].each do |email|
         person = Person.new(:primary_email => email)
-        person.should_not be_valid(email)
+        expect(person).to_not be_valid(email)
       end
     end
   end
@@ -114,21 +114,21 @@ describe EmailValidator do
     it "allows valid email" do
       email = "test@gmail.com"
       person = PersonMX.new(:primary_email => email)
-      person.should be_valid(email)
+      expect(person).to be_valid(email)
     end
 
     it "doesn't allow invalid email" do
       email = "test@example.com"
       person = PersonMX.new(:primary_email => email)
-      person.should_not be_valid(email)
+      expect(person).to_not be_valid(email)
     end
 
     it "doesn't validate mx with invalid email" do
       email = "testexample.com"
-      lambda {
+      expect {
         person = PersonMX.new(:primary_email => email)
-        person.should_not be_valid(email)
-      }.should_not raise_error
+        expect(person).to_not be_valid(email)
+      }.to_not raise_error
     end
   end
 
@@ -136,13 +136,13 @@ describe EmailValidator do
     it "allows valid email" do
       email = "test@gmail.com"
       person = PersonMXA.new(:primary_email => email)
-      person.should be_valid(email)
+      expect(person).to be_valid(email)
     end
 
     it "allows valid email with fallback to A" do
       email = "test@example.com"
       person = PersonMXA.new(:primary_email => email)
-      person.should be_valid(email)
+      expect(person).to be_valid(email)
     end
   end
 
@@ -150,15 +150,15 @@ describe EmailValidator do
     it "allows custom error message" do
       email = "example.com"
       person = PersonMessage.new(:primary_email => email)
-      person.should_not be_valid(email)
-      person.errors[:primary_email].should eql(["fails with custom message"])
+      expect(person).to_not be_valid(email)
+      expect(person.errors[:primary_email]).to eql(["fails with custom message"])
     end
 
     it "allows custom error message for mx fallback" do
       email = "test@example.com"
       person = PersonMXMessage.new(:primary_email => email)
-      person.should_not be_valid(email)
-      person.errors[:primary_email].should eql(["fails with custom mx message"])
+      expect(person).to_not be_valid(email)
+      expect(person.errors[:primary_email]).to eql(["fails with custom mx message"])
     end
   end
 
@@ -166,21 +166,21 @@ describe EmailValidator do
     it "allows valid email" do
       email = "test@gmail.com"
       person = PersonProcMX.new(:primary_email => email)
-      person.should be_valid(email)
+      expect(person).to be_valid(email)
     end
 
     it "allows invalid email if proc evaluates to false" do
       email = "test@example.com"
       person = PersonProcMX.new(:primary_email => email)
       person.with_mx_validation = false
-      person.should be_valid(email)
+      expect(person).to be_valid(email)
     end
 
     it "does not allow invalid email if proc evaluates to true" do
       email = "test@example.com"
       person = PersonProcMX.new(:primary_email => email)
       person.with_mx_validation = true
-      person.should_not be_valid(email)
+      expect(person).to_not be_valid(email)
     end
   end
 
@@ -188,27 +188,27 @@ describe EmailValidator do
     it "allows valid email" do
       email = "test@gmail.com"
       person = PersonProcMXA.new(:primary_email => email)
-      person.should be_valid(email)
+      expect(person).to be_valid(email)
     end
 
     it "allows valid email with fallback to A" do
       email = "test@example.com"
       person = PersonMXA.new(:primary_email => email)
-      person.should be_valid(email)
+      expect(person).to be_valid(email)
     end
 
     it "allows invalid email if proc evaluates to false" do
       email = "test@exampledoesnotexist.com"
       person = PersonProcMXA.new(:primary_email => email)
       person.with_mx_validation = false
-      person.should be_valid(email)
+      expect(person).to be_valid(email)
     end
 
     it "does not allow invalid email if proc evaluates to true" do
       email = "test@exampledoesnotexist.com"
       person = PersonProcMX.new(:primary_email => email)
       person.with_mx_validation = true
-      person.should_not be_valid(email)
+      expect(person).to_not be_valid(email)
     end
   end
 
