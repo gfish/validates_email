@@ -2,7 +2,6 @@
 require 'spec_helper'
 
 describe EmailValidator do
-
   context "w/o mx fallback" do
     it "allows valid emails" do
       [
@@ -211,5 +210,4 @@ describe EmailValidator do
       expect(person).to_not be_valid(email)
     end
   end
-
 end
