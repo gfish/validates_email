@@ -15,34 +15,34 @@ end
 
 class PersonMessage < GenericPerson
   validates :primary_email,
-            email: {message: 'fails with custom message'}
+            email: { message: 'fails with custom message' }
 end
 
 class PersonMX < GenericPerson
   validates :primary_email,
-            email: {mx: true}
+            email: { mx: true }
 end
 
 class PersonMXA < GenericPerson
   validates :primary_email,
-            email: {mx: {a_fallback: true}}
+            email: { mx: { a_fallback: true } }
 end
 
 class PersonMXMessage < GenericPerson
   validates :primary_email,
-            email: {mx: true, mx_message: 'fails with custom mx message'}
+            email: { mx: true, mx_message: 'fails with custom mx message' }
 end
 
 class PersonProcMX < GenericPerson
   attr_accessor :with_mx_validation
 
   validates :primary_email,
-            email: {mx: proc { |person| person.with_mx_validation }}
+            email: { mx: proc { |person| person.with_mx_validation } }
 end
 
 class PersonProcMXA < GenericPerson
   attr_accessor :with_mx_validation
 
   validates :primary_email,
-            email: {mx: {if: proc { |person| person.with_mx_validation }, a_fallback: true}}
+            email: { mx: { if: proc { |person| person.with_mx_validation }, a_fallback: true } }
 end
