@@ -10,40 +10,39 @@ class GenericPerson
 end
 
 class Person < GenericPerson
-  validates :primary_email, :email => true
+  validates :primary_email, email: true
 end
 
 class PersonMessage < GenericPerson
   validates :primary_email,
-            :email => { :message => 'fails with custom message' }
+            email: {message: 'fails with custom message'}
 end
 
 class PersonMX < GenericPerson
   validates :primary_email,
-            :email => { :mx => true }
+            email: {mx: true}
 end
 
 class PersonMXA < GenericPerson
   validates :primary_email,
-            :email => { :mx => { :a_fallback => true } }
+            email: {mx: {a_fallback: true}}
 end
 
 class PersonMXMessage < GenericPerson
   validates :primary_email,
-            :email => { :mx => true,
-                        :mx_message => 'fails with custom mx message'}
+            email: {mx: true, mx_message: 'fails with custom mx message'}
 end
 
 class PersonProcMX < GenericPerson
   attr_accessor :with_mx_validation
 
   validates :primary_email,
-            :email => { :mx => Proc.new{|person| person.with_mx_validation }}
+            email: {mx: Proc.new{|person| person.with_mx_validation }}
 end
 
 class PersonProcMXA < GenericPerson
   attr_accessor :with_mx_validation
 
   validates :primary_email,
-            :email => { :mx => { :if => Proc.new{|person| person.with_mx_validation }, :a_fallback => true } }
+            email: {mx: {if: Proc.new{|person| person.with_mx_validation }, a_fallback: true}}
 end
