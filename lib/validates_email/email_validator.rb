@@ -81,7 +81,7 @@ class EmailValidator < ActiveModel::EachValidator
     end
     @mx.size > 0 ? true : false
   end
-  
+
   def validates_email_with_mailgun(email)
     require 'rest_client'
     res = RestClient.get "https://api:#{ENV['MAILGUN_PUBLIC_KEY']}@api.mailgun.net/v2/address/validate", {params: {address: email}}
@@ -89,5 +89,4 @@ class EmailValidator < ActiveModel::EachValidator
     is_valid = !parsed["is_valid"].nil? ? parsed["is_valid"] : false
     is_valid
   end
-
 end
