@@ -7,7 +7,7 @@ class EmailValidator < ActiveModel::EachValidator
   end if RUBY_VERSION.to_f < 1.9
 
   LocalPartSpecialChars = Regexp.escape('!#$%&\'*-/=?+-^_`{|}~')
-  LocalPartUnquoted = '([a-z0-9' + LocalPartSpecialChars + '])?([a-z0-9]+([' + LocalPartSpecialChars + '\.\+])?)*[a-z0-9\-_]'
+  LocalPartUnquoted = '([a-z0-9' + LocalPartSpecialChars + '])?([a-z0-9]+([' + LocalPartSpecialChars + '\.\+]|[_]+)?)*[a-z0-9\-_]'
   LocalPartQuoted = '\"(([[:alnum:]' + LocalPartSpecialChars + '\.\+]*|(\\\\[\x00-\xFF]))*)\"'
   Regex = Regexp.new('^((' + LocalPartUnquoted + ')|(' + LocalPartQuoted + ')+)@(((\w+\-+[^_])|(\w+\.[^_]))*([a-z0-9-]{1,63})\.[a-z]{2,6}(?:\.[a-z]{2,6})?$)', Regexp::EXTENDED | Regexp::IGNORECASE, 'n')
 

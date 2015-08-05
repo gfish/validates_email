@@ -16,6 +16,8 @@ describe EmailValidator do
         'v@example.com',
         'valid@example.ca',
         'valid_@example.com',
+        'valid_2@example.com',
+        'valid__me@example.com',
         'valid123.456@example.org',
         'valid123.456@example.travel',
         'valid123.456@example.museum',
