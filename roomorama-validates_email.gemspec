@@ -17,4 +17,9 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
 
   s.add_dependency "activemodel", ">= 3.0.0"
+
+  s.add_development_dependency 'activemodel', '~> 4.0'
+  s.add_development_dependency 'rspec', '~> 3.0'
+  s.add_development_dependency 'sqlite3'
+  s.add_development_dependency 'rake'
 end
